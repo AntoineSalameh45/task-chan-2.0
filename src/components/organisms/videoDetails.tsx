@@ -25,7 +25,14 @@ const VideoDetails: React.FC = () => {
     return (
         <div>
             <h2>{videoDetails.title}</h2>
-            <Image src={videoDetails.image} alt={videoDetails.title} />
+            {videoDetails.image && (
+                <Image
+                    src={videoDetails.image}
+                    alt={videoDetails.title}
+                    width={100}
+                    height={100}
+                />
+            )}
         </div>
     );
 };
