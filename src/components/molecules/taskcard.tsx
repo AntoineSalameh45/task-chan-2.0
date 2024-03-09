@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -26,7 +25,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
           {task.description}
         </Typography>
         <Typography color="textSecondary">
-            #{task.id}
+          #{task.id}
         </Typography>
       </CardContent>
     </Card>

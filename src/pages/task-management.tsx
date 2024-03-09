@@ -1,18 +1,29 @@
 // pages/task-management.tsx
-import { RootState } from '../store';
 import { useSelector, useDispatch } from 'react-redux';
 import { addTask, toggleTask } from '../store/taskslice';
+import { Task } from '../components/molecules/taskform'; // Import Task type
+import { RootState } from '../store';
 
 const TaskManagementPage = () => {
   const tasks = useSelector((state: RootState) => state.tasks.tasks);
   const dispatch = useDispatch();
 
   const handleAddTask = (title: string) => {
-    const id = Math.floor(Math.random() * 1000); // Generate a random id
-    dispatch(addTask({ id, title, completed: false }));
+    const id = Math.floor(Math.random() * 1000).toString();
+    const newTask: Task = {
+      id,
+      title,
+      description: "", // Add description property with an empty string
+      completed: false,
+      creationDate: new Date(), // Add creationDate property with the current date
+      dueDate: new Date(), // Add dueDate property with the current date
+      priority: "Low", // Add priority property with a default value
+    };
+    dispatch(addTask(newTask));
   };
+  
 
-  const handleToggleTask = (id: number) => {
+  const handleToggleTask = (id: string) => { // Change id type to string
     dispatch(toggleTask(id));
   };
 

@@ -9,8 +9,10 @@ const DetailsPage: React.FC = () => {
 
   return (
     <>
-        <Navbar />
+      <Navbar />
+      <div className='h-[100vh] w-[100vw] relative flex justify-center self-center flex-wrap overflow-x-hidden'>
         <VideoDetails />
+      </div>
     </>
   );
 };

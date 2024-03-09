@@ -1,4 +1,4 @@
-// store/index.ts
+// src/store/index.ts
 import { configureStore } from '@reduxjs/toolkit';
 import taskReducer from './taskslice';
 
@@ -9,5 +9,3 @@ const store = configureStore({
 });
 
 export default store;
-
-export type RootState = ReturnType<typeof store.getState>;
