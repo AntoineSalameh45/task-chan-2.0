@@ -4,25 +4,15 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
-
-export interface Task {
-  id: string;
-  title: string;
-  description: string;
-  completed: boolean;
-}
+import { Task } from '../molecules/taskform'; // Adjust the import path accordingly
 
 interface TaskCardProps {
   task: Task;
-  onToggleCompleted: (taskId: string) => void;
   onDeleteTask: (taskId: string) => void;
+  checked?: boolean;
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ task, onToggleCompleted, onDeleteTask }) => {
-  const handleToggleCompleted = () => {
-    onToggleCompleted(task.id);
-  };
-
+const TaskCard: React.FC<TaskCardProps> = ({ task, onDeleteTask, checked }) => {
   const handleDeleteTask = () => {
     onDeleteTask(task.id);
   };
@@ -41,9 +31,9 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggleCompleted, onDeleteTa
         </Typography>
         <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Checkbox
-            checked={task.completed}
-            onChange={handleToggleCompleted}
-            inputProps={{ 'aria-label': 'toggle task completed' }}
+            checked={checked}
+            disabled // Disable the checkbox for completed tasks
+            inputProps={{ 'aria-label': 'task completed' }}
           />
           <Button variant="outlined" color="error" onClick={handleDeleteTask}>Delete</Button>
         </div>
