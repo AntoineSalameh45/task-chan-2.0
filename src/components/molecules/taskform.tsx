@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { v4 as uuidv4 } from 'uuid';
 import CustomTextField from "../atoms/textfield";
 import CustomButton from "../atoms/button";
 import { addTask } from "../../store/taskslice";
@@ -24,7 +25,6 @@ const TaskForm: React.FC<TaskFormProps> = () => {
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
   const [priority, setPriority] = useState<"Low" | "Medium" | "High" | "Urgent">("Low");
-  const [taskIdCounter, setTaskIdCounter] = useState(1);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,11 +32,11 @@ const TaskForm: React.FC<TaskFormProps> = () => {
       return;
     }
     const newTask: Task = {
-      id: taskIdCounter.toString(),
+      id: uuidv4(),
       title: title,
       description: description,
-      completed: false, // Example value for completed
-      creationDate: new Date(), // Example value for creationDate
+      completed: false,
+      creationDate: new Date(),
       dueDate: dueDate,
       priority: priority,
     };
@@ -46,7 +46,6 @@ const TaskForm: React.FC<TaskFormProps> = () => {
     setDescription("");
     setDueDate(new Date());
     setPriority("Low");
-    setTaskIdCounter(taskIdCounter + 1);
   };
 
   const isFormValid = title.trim() !== "" && description.trim() !== "";
@@ -68,25 +67,25 @@ const TaskForm: React.FC<TaskFormProps> = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", alignItems: "center", background:"#ffffff69", width: "50vw", padding: "20px" }}>
         <CustomTextField
           label="Task title"
           value={title}
-          onChange={(value) => setTitle(value)}
+          onChange={(value) => setTitle(value)} // Update onChange handler
         />
         <CustomTextField
           label="Task description"
           value={description}
-          onChange={(value) => setDescription(value)}
+          onChange={(value) => setDescription(value)} // Update onChange handler
         />
         <CustomTextField
           type="date"
           label="Due date"
           value={dueDate.toISOString().split('T')[0]}
-          onChange={(value) => setDueDate(new Date(value))}
+          onChange={(value) => setDueDate(new Date(value))} // Update onChange handler
         />
         <label htmlFor="priority">Priority:</label>
-        <select id="priority" value={priority} onChange={(e) => setPriority(e.target.value as "Low" | "Medium" | "High" | "Urgent")}>
+        <select id="priority" value={priority} onChange={(e) => setPriority(e.currentTarget.value as "Low" | "Medium" | "High" | "Urgent")}>
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>
           <option value="High">High</option>
