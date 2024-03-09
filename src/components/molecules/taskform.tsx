@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import CustomTextField from "../atoms/textfield";
 import CustomButton from "../atoms/button";
+import { addTask } from "../../store/taskslice";
 
 export interface Task {
   id: string;
@@ -9,47 +11,46 @@ export interface Task {
   completed: boolean;
   creationDate: Date;
   dueDate: Date;
-  priority: "Low" | "Medium" | "High" | "Urgent"; // Updated priority type
+  priority: "Low" | "Medium" | "High" | "Urgent";
 }
 
 interface TaskFormProps {
-  addTask: (newTask: Task) => void;
+  // No need to pass addTask as a prop anymore
 }
 
-const TaskForm: React.FC<TaskFormProps> = ({ addTask }) => {
+const TaskForm: React.FC<TaskFormProps> = () => {
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
-  const [priority, setPriority] = useState<"Low" | "Medium" | "High" | "Urgent">("Low"); // Updated priority state
-  const [taskIdCounter, setTaskIdCounter] = useState(1); // Initialize ID counter
+  const [priority, setPriority] = useState<"Low" | "Medium" | "High" | "Urgent">("Low");
+  const [taskIdCounter, setTaskIdCounter] = useState(1);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Validate title and description
     if (title.trim() === "" || description.trim() === "") {
       return;
     }
-    // Create a new task object with incremented ID
     const newTask: Task = {
-      id: taskIdCounter.toString(), // Use current counter value as ID
+      id: taskIdCounter.toString(),
       title: title,
       description: description,
-      completed: false,
-      creationDate: new Date(),
+      completed: false, // Example value for completed
+      creationDate: new Date(), // Example value for creationDate
       dueDate: dueDate,
       priority: priority,
     };
-    addTask(newTask);
+    
+    dispatch(addTask(newTask));
     setTitle("");
     setDescription("");
     setDueDate(new Date());
-    setPriority("Low"); // Reset priority to default value
-    setTaskIdCounter(taskIdCounter + 1); // Increment ID counter
+    setPriority("Low");
+    setTaskIdCounter(taskIdCounter + 1);
   };
 
   const isFormValid = title.trim() !== "" && description.trim() !== "";
 
-  // Function to get color based on priority level
   const getPriorityColor = (priority: "Low" | "Medium" | "High" | "Urgent") => {
     switch (priority) {
       case "Low":
@@ -81,7 +82,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ addTask }) => {
         <CustomTextField
           type="date"
           label="Due date"
-          value={dueDate.toISOString().split('T')[0]} // Convert date to string format
+          value={dueDate.toISOString().split('T')[0]}
           onChange={(value) => setDueDate(new Date(value))}
         />
         <label htmlFor="priority">Priority:</label>
@@ -93,7 +94,6 @@ const TaskForm: React.FC<TaskFormProps> = ({ addTask }) => {
         </select>
         <CustomButton text="Add Task" disabled={!isFormValid} />
       </form>
-      {/* Display selected priority color */}
       <div style={{ marginTop: "20px", backgroundColor: getPriorityColor(priority), width: "100px", height: "20px" }}></div>
     </div>
   );

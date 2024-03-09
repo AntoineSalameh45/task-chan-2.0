@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import TaskCard, { Task } from '../../components/molecules/taskcard';
+import TaskCard, { Task } from '../../../components/molecules/taskcard';
 import Navbar from '@/components/organisms/navbar';
 
 const CompletedPage: React.FC = () => {

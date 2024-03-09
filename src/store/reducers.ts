@@ -1,11 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit';
-// Import your slice reducers here
-import taskReducer from './taskslice';
+import tasksReducer from './taskslice';
 
 const rootReducer = combineReducers({
-  // Add your slice reducers here
-  tasks: taskReducer,
+  tasks: tasksReducer,
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;
