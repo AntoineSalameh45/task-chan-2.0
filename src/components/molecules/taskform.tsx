@@ -1,3 +1,4 @@
+// TaskForm.tsx
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
@@ -15,11 +16,7 @@ export interface Task {
   priority: "Low" | "Medium" | "High" | "Urgent";
 }
 
-interface TaskFormProps {
-  // No need to pass addTask as a prop anymore
-}
-
-const TaskForm: React.FC<TaskFormProps> = () => {
+const TaskForm: React.FC = () => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
