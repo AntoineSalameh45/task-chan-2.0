@@ -28,9 +28,9 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onDeleteTask, onToggleComplet
       case "Low":
         return "#808080"; // Grey
       case "Medium":
-        return "#FFFF00"; // Yellow
+        return "#CCCC00"; // Darker Yellow
       case "High":
-        return "#FFA500"; // Orange
+        return "#FF8C00"; // Darker Orange
       case "Urgent":
         return "#FF0000"; // Red
       default:
@@ -39,6 +39,8 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onDeleteTask, onToggleComplet
   };
 
   const priorityColor = getPriorityColor(task.priority);
+  const titleColor = task.completed ? '#008000' : priorityColor; // Green if completed, otherwise priority color
+  const cardBorderColor = task.completed ? '#008000' : priorityColor;
 
   const formatDate = (date: Date): string => {
     if (!(date instanceof Date) || isNaN(date.getTime())) {
@@ -51,21 +53,16 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onDeleteTask, onToggleComplet
   };
 
   return (
-    <Card variant="outlined" style={{width: '300px', height: '220px', borderColor: priorityColor, borderWidth: '2px', backgroundColor: '#ffffffc4' }}>
+    <Card variant="outlined" style={{ width: '300px', height: '220px', borderColor: cardBorderColor, borderWidth: '2px', backgroundColor: '#ffffffc4' }}>
       <CardContent>
-        <Typography variant="h6" component="h2" gutterBottom style={{ color: priorityColor }}>
+        <Typography variant="h6" component="h2" gutterBottom style={{ color: titleColor }}>
           {task.title}
         </Typography>
-        <Typography color="textSecondary" 
-                    style={{height: '50px', overflowX: 'hidden', overflowY: 'auto', whiteSpace: 'normal', 
-                    wordWrap: 'break-word'}}>
+        <Typography color="textSecondary" style={{ height: '50px', overflowX: 'hidden', overflowY: 'auto', whiteSpace: 'normal', wordWrap: 'break-word' }}>
           {task.description}
         </Typography>
         <Typography style={{ color: priorityColor }}>
           Priority: {task.priority}
-        </Typography>
-        <Typography style={{ color: priorityColor }}>
-          Due Date: {formatDate(task.dueDate)}
         </Typography>
 
         <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
