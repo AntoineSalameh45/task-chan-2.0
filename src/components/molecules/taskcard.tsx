@@ -1,4 +1,3 @@
-// TaskCard.tsx
 import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -52,7 +51,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onDeleteTask, onToggleComplet
   };
 
   return (
-    <Card variant="outlined" style={{ marginBottom: '1rem', width: '300px', height: '220px', borderColor: priorityColor, borderWidth: '2px', backgroundColor: '#ffffffc4' }}>
+    <Card variant="outlined" style={{width: '300px', height: '220px', borderColor: priorityColor, borderWidth: '2px', backgroundColor: '#ffffffc4' }}>
       <CardContent>
         <Typography variant="h6" component="h2" gutterBottom style={{ color: priorityColor }}>
           {task.title}
@@ -70,11 +69,16 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onDeleteTask, onToggleComplet
         </Typography>
 
         <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Checkbox
-            checked={task.completed}
-            onChange={handleToggleCompleted}
-            inputProps={{ 'aria-label': 'task completed' }}
-          />
+          <div className='flex items-center'>
+            <Checkbox
+              checked={task.completed}
+              onChange={handleToggleCompleted}
+              inputProps={{ 'aria-label': 'task completed' }}
+            />
+            <Typography color="textSecondary" style={{ fontSize: 'small' }}>
+              {task.completed ? 'Mark as active' : 'Mark as completed'}
+            </Typography>
+          </div>
           <Button variant="outlined" color="error" onClick={handleDeleteTask}>Delete</Button>
         </div>
       </CardContent>

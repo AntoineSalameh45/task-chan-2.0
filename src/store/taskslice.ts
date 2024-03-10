@@ -1,14 +1,14 @@
-// store/taskslice.ts
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Task } from '../components/molecules/taskform';
 
 interface TaskState {
   tasks: Task[];
+  dueDate: Date | null; // Add dueDate to the state
 }
 
 const initialState: TaskState = {
   tasks: [],
+  dueDate: null,
 };
 
 const taskSlice = createSlice({
@@ -29,8 +29,11 @@ const taskSlice = createSlice({
         taskToUpdate.completed = completed;
       }
     },
+    updateDueDate(state, action: PayloadAction<Date>) { // Add action to update dueDate
+      state.dueDate = action.payload;
+    },
   },
 });
 
-export const { addTask, deleteTask, updateTaskStatus } = taskSlice.actions;
+export const { addTask, deleteTask, updateTaskStatus, updateDueDate } = taskSlice.actions;
 export default taskSlice.reducer;
