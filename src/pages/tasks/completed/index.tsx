@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Navbar from '@/components/organisms/navbar';
 import TaskCard from '@/components/molecules/taskcard';
 import { RootState } from '../../../store';
-import { deleteTask } from '../../../store/taskslice';
+import { deleteTask, updateTaskStatus } from '../../../store/taskslice';
 import { Task } from '../../../components/molecules/taskform';
 
 const CompletedPage: React.FC = () => {
@@ -15,10 +15,12 @@ const CompletedPage: React.FC = () => {
     dispatch(deleteTask(taskId));
   };
 
-  // Filter out completed tasks
+  const handleToggleCompleted = (taskId: string) => {
+    dispatch(updateTaskStatus({ taskId, completed: false })); // Update task status to active
+  };
+
   const completedTasks = tasks.filter(task => task.completed);
 
-  // Filter out duplicate tasks based on their ID
   const uniqueCompletedTasks = completedTasks.filter((task, index, self) =>
     index === self.findIndex((t) => t.id === task.id)
   );
@@ -34,6 +36,7 @@ const CompletedPage: React.FC = () => {
                 key={task.id}
                 task={task}
                 onDeleteTask={handleDeleteTask}
+                onToggleCompleted={handleToggleCompleted} // Pass handleToggleCompleted function
               />
             ))
           ) : (

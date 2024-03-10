@@ -90,7 +90,6 @@ const TaskForm: React.FC = () => {
         </select>
         <CustomButton text="Add Task" disabled={!isFormValid} />
       </form>
-      <div style={{ marginTop: "20px", backgroundColor: getPriorityColor(priority), width: "100px", height: "20px" }}></div>
     </div>
   );
 };
