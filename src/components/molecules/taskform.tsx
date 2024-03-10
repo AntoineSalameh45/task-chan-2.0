@@ -1,17 +1,16 @@
-// TaskForm.tsx
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
-import CustomTextField from "../atoms/textfield";
-import CustomButton from "../atoms/button";
-import { addTask } from "../../store/taskslice";
+import CustomTextField from "../atoms/customTextfield";
+import CustomButton from "../atoms/customButton";
+import { addTask } from "../../store/taskSlice";
+import CustomDateField from "../atoms/customDateField";
 
 export interface Task {
   id: string;
   title: string;
   description: string;
   completed: boolean;
-  creationDate: Date;
   dueDate: Date;
   priority: "Low" | "Medium" | "High" | "Urgent";
 }
@@ -20,47 +19,42 @@ const TaskForm: React.FC = () => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [dueDate, setDueDate] = useState(new Date());
-  const [priority, setPriority] = useState<"Low" | "Medium" | "High" | "Urgent">("Low");
+  const [dueDate, setDueDate] = useState(new Date()); // Initialize with Date object
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (title.trim() === "" || description.trim() === "") {
       return;
     }
-    const newTask: Task = {
+    const today = new Date();
+    const timeDifference = dueDate.getTime() - today.getTime();
+    const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+    let priority: "Low" | "Medium" | "High" | "Urgent" = "Low";
+    if (daysDifference <= 1) {
+      priority = "Urgent";
+    } else if (daysDifference <= 3) {
+      priority = "High";
+    } else if (daysDifference <= 7) {
+      priority = "Medium";
+    }
+
+    const newTask = {
       id: uuidv4(),
       title: title,
       description: description,
       completed: false,
-      creationDate: new Date(),
       dueDate: dueDate,
-      priority: priority,
+      priority: priority, // Use dynamically calculated priority
     };
     
     dispatch(addTask(newTask));
     setTitle("");
     setDescription("");
-    setDueDate(new Date());
-    setPriority("Low");
+    setDueDate(new Date()); // Set to Date object
   };
 
   const isFormValid = title.trim() !== "" && description.trim() !== "";
-
-  const getPriorityColor = (priority: "Low" | "Medium" | "High" | "Urgent") => {
-    switch (priority) {
-      case "Low":
-        return "grey";
-      case "Medium":
-        return "yellow";
-      case "High":
-        return "orange";
-      case "Urgent":
-        return "red";
-      default:
-        return "grey";
-    }
-  };
 
   return (
     <div>
@@ -75,20 +69,14 @@ const TaskForm: React.FC = () => {
           value={description}
           onChange={(value) => setDescription(value)} // Update onChange handler
         />
-        <CustomTextField
-          type="date"
-          label="Due date"
-          value={dueDate.toISOString().split('T')[0]}
-          onChange={(value) => setDueDate(new Date(value))} // Update onChange handler
+        <CustomDateField 
+          label="Due date" 
+          value={dueDate} 
+          onChange={(value: Date) => setDueDate(value)} // Accept Date
         />
-        <label htmlFor="priority">Priority:</label>
-        <select id="priority" value={priority} onChange={(e) => setPriority(e.currentTarget.value as "Low" | "Medium" | "High" | "Urgent")}>
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-          <option value="Urgent">Urgent</option>
-        </select>
-        <CustomButton text="Add Task" disabled={!isFormValid} />
+        <div style={{ display: "flex", alignItems: "center" }}> {/* Container for priority and button */}
+          <CustomButton text="Add Task" disabled={!isFormValid} />
+        </div>
       </form>
     </div>
   );

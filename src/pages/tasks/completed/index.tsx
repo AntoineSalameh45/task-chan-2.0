@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Navbar from '@/components/organisms/navbar';
 import TaskCard from '@/components/molecules/taskcard';
 import { RootState } from '../../../store';
-import { deleteTask, updateTaskStatus } from '../../../store/taskslice';
+import { deleteTask, updateTaskStatus } from '../../../store/taskSlice';
 import { Task } from '../../../components/molecules/taskform';
 
 const CompletedPage: React.FC = () => {

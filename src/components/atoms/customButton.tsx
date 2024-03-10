@@ -22,6 +22,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ text, disabled, onClick }) 
         cursor: disabled ? 'not-allowed' : 'pointer', // Update cursor styles
         opacity: disabled ? 0.65 : 1, // Update opacity styles
         outline: 'none',
+        marginLeft: '10px'
       }}
     >
       {text}
