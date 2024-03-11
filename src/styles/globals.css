@@ -17,3 +17,29 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+/* Define scrollbar colors */
+:root {
+  --scrollbar-thumb-color: #BA55D3; /* Color of the scrollbar thumb */
+  --scrollbar-track-color: #ffffff69; /* Color of the scrollbar track */
+}
+
+/* Define scrollbar styles */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+/* Define scrollbar thumb styles */
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color); /* Color of the scrollbar thumb */
+  border-radius: 6px; /* Border radius of the scrollbar thumb */
+}
+
+/* Define scrollbar track styles */
+::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-track-color); /* Color of the scrollbar track */
+}
+
+/* Define scrollbar corner styles (optional) */
+::-webkit-scrollbar-corner {
+  background-color: transparent; /* Color of the scrollbar corner */
+}

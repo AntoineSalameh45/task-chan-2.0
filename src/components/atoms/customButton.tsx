@@ -1,10 +1,21 @@
+/**
+ * CustomButton Component
+ * 
+ * This component represents a custom button with specified text and optional onClick function.
+ * It provides visual feedback based on the disabled state and changes color on hover.
+ * 
+ * @param text The text displayed on the button.
+ * @param disabled Specifies whether the button is disabled.
+ * @param onClick Optional onClick function to handle button click events.
+ */
+
 import React from 'react';
 import Button from '@mui/material/Button';
 
 interface CustomButtonProps {
-  text: string;
-  disabled: boolean; // Change isFormValid to disabled
-  onClick?: () => void; // Optional onClick function
+  text: string; // Text displayed on the button
+  disabled: boolean; // Specifies whether the button is disabled
+  onClick?: () => void; // Optional onClick function to handle button click events
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({ text, disabled, onClick }) => {
@@ -16,13 +27,17 @@ const CustomButton: React.FC<CustomButtonProps> = ({ text, disabled, onClick }) 
       onClick={onClick} // Pass the onClick function if provided
       sx={{
         width: "100%",
+        height: '75%',
         borderRadius: "5px",
         backgroundColor: disabled ? '#A020F0' : '#4B0082', // Invert the colors for disabled state
         color: '#fff',
         cursor: disabled ? 'not-allowed' : 'pointer', // Update cursor styles
         opacity: disabled ? 0.65 : 1, // Update opacity styles
         outline: 'none',
-        marginLeft: '10px'
+        marginLeft: '10px',
+        '&:hover': {
+          backgroundColor: disabled ? '#A020F0' : '#BA55D3', // Change color on hover
+        },
       }}
     >
       {text}

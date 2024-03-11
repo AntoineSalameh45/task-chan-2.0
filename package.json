@@ -2,12 +2,20 @@
   "name": "task-chan-2.0",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+  "description": "A task manager app built with Next.js, React, Redux, Tailwind CSS, and Material-UI.",
+  "author": "BiG A",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/task-chan-2.0.git"
   },
+  "keywords": [
+    "Next.js",
+    "React",
+    "Redux",
+    "Tailwind CSS",
+    "Material-UI",
+    "Task Manager"
+  ],
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
